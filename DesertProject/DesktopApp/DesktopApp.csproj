@@ -63,9 +63,8 @@
     <Compile Include="Base_classes\Elements\Water.cs" />
     <Compile Include="Base_classes\ElementType.cs" />
     <Compile Include="Players\Coyote.cs" />
-    <Compile Include="Players\PlayerBase.cs" />
-    <Compile Include="MainSettings.xaml.cs">
-      <DependentUpon>MainSettings.xaml</DependentUpon>
+    <Compile Include="MainSetings.xaml.cs">
+      <DependentUpon>MainSetings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Players\PocketMouse.cs" />
     <Compile Include="PlayerSettings.xaml.cs">

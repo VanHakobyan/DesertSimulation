@@ -11,6 +11,8 @@ namespace DesktopApp.Base_classes
         Rock,
         Quicksand,
         Water,
-        Grass
+        Grass,
+        Coyote,
+        PocketMouse
     }
 }
