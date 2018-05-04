@@ -11,5 +11,6 @@ namespace DesktopApp.Base_classes
         public int CountOnDesert { get; set; }
         public ElementType ElementType { get; set; }
         public string Color { get; set; } = "peru";
+        public string Name { get; set; } = "";
     }
 }

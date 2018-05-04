@@ -62,7 +62,6 @@
     <Compile Include="Base_classes\Elements\Water.cs" />
     <Compile Include="Base_classes\ElementType.cs" />
     <Compile Include="Players\Coyote.cs" />
-    <Compile Include="Players\PlayerBase.cs" />
     <Compile Include="MainSetings.xaml.cs">
       <DependentUpon>MainSetings.xaml</DependentUpon>
     </Compile>

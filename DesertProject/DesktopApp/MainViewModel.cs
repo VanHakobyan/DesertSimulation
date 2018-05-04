@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DesktopApp.Base_classes;
 using System.Collections.ObjectModel;
 using DesktopApp.Base_classes.Elements;
+using DesktopApp.Players;
 
 namespace DesktopApp
 {
@@ -44,6 +45,7 @@ namespace DesktopApp
                 Items.Add(new Element());
             }
             FillElements();
+            SetPlayers();
 
             Notify(nameof(Items));
         }
@@ -96,7 +98,28 @@ namespace DesktopApp
 
         private void SetPlayers()
         {
+            var mice = new PocketMouse().CountOnDesert;
+            var coyotes = new Coyote().CountOnDesert;
 
+            int index;
+            for (int i = 0; i < mice; i++)
+            {
+                index = _rnd.Next(0, Rows * Columns);
+                while (Items[index].Color != "peru" && Items[index].Name != "")
+                {
+                    index = _rnd.Next(0, Rows * Columns);
+                }
+                Items[index] = new PocketMouse();
+            }
+            for (int i = 0; i < coyotes; i++)
+            {
+                index = _rnd.Next(0, Rows * Columns);
+                while (Items[index].Color != "peru" && Items[index].Name != "")
+                {
+                    index = _rnd.Next(0, Rows * Columns);
+                }
+                Items[index] = new Coyote();
+            }
         }
 
         public int Rows

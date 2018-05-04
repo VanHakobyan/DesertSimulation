@@ -39,7 +39,7 @@
             <!-- Each item will be drawn using this template -->
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Background="{Binding Color}" Margin="1"  />
+                    <Button Content="{Binding Name}" Background="{Binding Color}" Margin="1"  />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
