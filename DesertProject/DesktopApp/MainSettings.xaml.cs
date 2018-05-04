@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,13 +27,17 @@ namespace DesktopApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var app = MainWindow.GetApp();
+
             int.TryParse(Height.Text, out var x);
             int.TryParse(Width.Text, out var y);
-            if (x != default(int) && y != default(int)) App.viewModel = new MainViewModel(x, y);
+            if (x != default(int) && y != default(int))
+            {
+                ConfigurationManager.AppSettings["YourKey"] = $"{x},{y}";
+                new MainViewModel(x, y).Show();
+            }
             else MessageBox.Show("Please enter correct!!!");
             Close();
-            //app.Shutdown();
+
         }
     }
 }
