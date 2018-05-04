@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DesktopApp.Players
+namespace DesktopApp.Base_classes
 {
-    public class PocketMouse : PlayerBase
+    public enum ElementType
     {
-        
+        Rock,
+        Quicksand,
+        Water,
+        Grass
     }
 }

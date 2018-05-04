@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Width="Auto" Height="20" Background="#FFB6BCDE" DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="_New"  Click="MenuItem_OnClick"/>
+                <MenuItem Header="_New"/>
                 <MenuItem Header="_Restart" Click="MenuRestart_OnClick" />
                 <MenuItem Header="_Settings" Click="MenuSettings_OnClick" />
                 <Separator />
@@ -33,7 +33,7 @@
             <!-- Each item will be drawn using this template -->
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding}" Background="#FFCD853F" Margin="1"  />
+                    <Button Content="{Binding}" Background="{Binding Color}" Margin="1"  />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

@@ -55,6 +55,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Base_classes\Element.cs" />
+    <Compile Include="Base_classes\Elements\Grass.cs" />
+    <Compile Include="Base_classes\Elements\Quicksand.cs" />
+    <Compile Include="Base_classes\Elements\Rock.cs" />
+    <Compile Include="Base_classes\Elements\Water.cs" />
+    <Compile Include="Base_classes\ElementType.cs" />
+    <Compile Include="Players\Coyote.cs" />
+    <Compile Include="Players\PlayerBase.cs" />
     <Compile Include="Players\PocketMouse.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>

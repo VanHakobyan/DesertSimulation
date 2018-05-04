@@ -1,13 +1,17 @@
-﻿using DesktopApp.Base_classes;
+﻿using System;
+using System.Collections.Generic;
+using DesktopApp.Base_classes;
 using System.Collections.ObjectModel;
 
 namespace DesktopApp
 {
     public class MainViewModel : ViewModel<MainWindow>
     {
-        private ObservableCollection<string> _items;
+        private ObservableCollection<Element> _items;
 
-        public ObservableCollection<string> Items
+        private Random _rnd = new Random();
+
+        public ObservableCollection<Element> Items
         {
             get { return _items; }
             set
@@ -33,10 +37,10 @@ namespace DesktopApp
             Rows = 10;
             Columns = 10;
 
-            Items = new ObservableCollection<string>();
+            Items = new ObservableCollection<Element>();
             for (int i = 0; i < Rows * Columns; i++)
             {
-                Items.Add($"Item {i}");
+                Items.Add(new Element());
             }
 
             Notify(nameof(Items));

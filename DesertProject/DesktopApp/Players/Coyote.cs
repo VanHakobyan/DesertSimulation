@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DesktopApp.Players
 {
-    public class PocketMouse : PlayerBase
+    public class Coyote : PlayerBase
     {
         
     }
