@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
         Title="Settings" Height="250" Width="600" ResizeMode="CanMinimize">
-    <Grid Margin="10">
+    <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*"></ColumnDefinition>
             <ColumnDefinition Width="3*"></ColumnDefinition>

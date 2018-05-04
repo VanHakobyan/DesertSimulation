@@ -23,5 +23,13 @@ namespace DesktopApp
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(Height.Text, out var x);
+            int.TryParse(Width.Text, out var y);
+            if (x != default(int) && y != default(int)) new MainViewModel(x, y).Show();
+            else MessageBox.Show("Please enter correct!!!");
+        }
     }
 }
