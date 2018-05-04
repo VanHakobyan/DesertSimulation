@@ -5,27 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Title="Main Setings" Height="200" Width="200">
+        Title="Main Setings" Height="150" Width="200">
     <Grid>
-        <Grid.ColumnDefinitions>
-           <ColumnDefinition Width="*"></ColumnDefinition>
-           <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <TextBlock  Grid.Row="0"  Text="Height"  TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-            <TextBlock  Grid.Row="1" Text="Width"  TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock  Grid.Row="0"  Text="Height"  TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock  Grid.Row="1" Text="Width"  TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBox Name="Height" Grid.Row="0" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50"></TextBox>
+                <TextBox Name="Width" Grid.Row="1" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50"></TextBox>
+            </Grid>
         </Grid>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <TextBox Name="Height" Grid.Row="0" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50"></TextBox>
-            <TextBox Name="Width" Grid.Row="1" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50"></TextBox>
+        <Grid Row="1">
+            <Button Height="20" Width="60" Content="OK" Click="Button_Click"></Button>
         </Grid>
     </Grid>
 </Window>

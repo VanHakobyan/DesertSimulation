@@ -33,13 +33,13 @@ namespace DesktopApp
             View.Show();
         }
 
-        public MainViewModel()
+        public MainViewModel(int rows ,int columns)
         {
-            Rows = 10;
-            Columns = 10;
+            Rows = rows;
+            Columns = columns;
 
             Items = new ObservableCollection<Element>();
-            for (int i = 0; i < Rows * Columns; i++)
+            for (var i = 0; i < Rows * Columns; i++)
             {
                 Items.Add(new Element());
             }
