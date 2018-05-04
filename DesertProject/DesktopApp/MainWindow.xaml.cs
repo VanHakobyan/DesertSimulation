@@ -35,6 +35,23 @@ namespace DesktopApp
             Application.Current.Shutdown();
         }
 
-        private void MenuSettings_OnClick(object sender, RoutedEventArgs e) => new Settings().Show();
+        private void PlayerSettings_OnClick(object sender, RoutedEventArgs e) => new Settings().Show();
+
+        private void Pause_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Play_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void About_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MainSettings_OnClick(object sender, RoutedEventArgs e)=>new MainSetings().Show();
     }
 }

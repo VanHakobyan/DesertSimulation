@@ -13,13 +13,19 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Width="Auto" Height="20" Background="#FFB6BCDE" DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="_New"/>
                 <MenuItem Header="_Restart" Click="MenuRestart_OnClick" />
-                <MenuItem Header="_Settings" Click="MenuSettings_OnClick" />
+                <MenuItem Header="_Player Settings" Click="PlayerSettings_OnClick" />
+                <MenuItem Header="_Main Settings" Click="MainSettings_OnClick" />
                 <Separator />
                 <MenuItem Header="_Exit"  Click="MenuExit_OnClick"/>
             </MenuItem>
-
+            <MenuItem Header="Game">
+                <MenuItem Header="_Pause" Click="Pause_OnClick" />
+                <MenuItem Header="_Play" Click="Play_OnClick" />
+            </MenuItem>
+            <MenuItem Header="About">
+                <MenuItem Header="_About" Click="About_OnClick" />
+            </MenuItem>
         </Menu>
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Items}" Margin="5">
 
