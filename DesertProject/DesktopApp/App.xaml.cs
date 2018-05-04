@@ -13,5 +13,13 @@ namespace DesktopApp
     /// </summary>
     public partial class App : Application
     {
+        public void Call() => OnStartup(null);
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var viewModel = new MainViewModel();
+            viewModel.Show();
+        }
     }
 }

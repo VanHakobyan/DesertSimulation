@@ -22,47 +22,19 @@ namespace DesktopApp
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
-            CreteRectangle(10, 20);
-            PositionSetter();
         }
 
-        private void PositionSetter()
+        private void MenuExit_OnClick(object sender, RoutedEventArgs e) => Close();
+
+        private void MenuRestart_OnClick(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < RectangleGrid.Children.Count; i++)
-            {
-                
-            }
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="height"></param>
-        /// <param name="width"></param>
-        private void CreteRectangle(int height, int width)
-        {
-            for (var i = 1; i < height; i++)
-            {
-                var rectangle = new Rectangle
-                {
-                    Height = 10*i,
-                    Width = 10*i
-                };
-                var blueBrush = new SolidColorBrush {Color = Colors.Blue};
-                var blackBrush = new SolidColorBrush {Color = Colors.Black};
-
-                // Set Rectangle's width and color
-                rectangle.StrokeThickness = 4;
-                rectangle.Stroke = blackBrush;
-
-                // Fill rectangle with blue color
-                rectangle.Fill = blueBrush;
-                RectangleGrid.Children.Add(rectangle);
-            }
-        }
+        private void MenuSettings_OnClick(object sender, RoutedEventArgs e) => new Settings().Show();
     }
 }

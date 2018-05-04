@@ -6,44 +6,36 @@
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid x:Name="MainGrid">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Width="Auto" Height="20" Background="#FFB6BCDE" DockPanel.Dock="Top">
-            <MenuItem Header="File"/>
-            <MenuItem Header="Settings"/>
-            <MenuItem Header="Restart"/>
-            <Separator />
-            <MenuItem>
-                <MenuItem.Header>
-                    <DockPanel>
-                        <TextBlock>Step</TextBlock>
-                        <TextBlock Width="10"></TextBlock>
-                        <TextBlock HorizontalAlignment="Right">F2</TextBlock>
-                    </DockPanel>
-                </MenuItem.Header>
+            <MenuItem Header="File">
+                <MenuItem Header="_New"  Click="MenuItem_OnClick"/>
+                <MenuItem Header="_Restart" Click="MenuRestart_OnClick" />
+                <MenuItem Header="_Settings" Click="MenuSettings_OnClick" />
+                <Separator />
+                <MenuItem Header="_Exit"  Click="MenuExit_OnClick"/>
             </MenuItem>
+
         </Menu>
-        <Grid x:Name="RectangleGrid" VerticalAlignment="Stretch" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5">
-            <!--<Rectangle Height="200" Width="200">
-                <Rectangle.Fill>
-                    <DrawingBrush TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute">
-                        <DrawingBrush.Drawing>
-                            <DrawingGroup>
-                                <GeometryDrawing Brush="SaddleBrown">
-                                    <GeometryDrawing.Geometry>
-                                        <RectangleGeometry Rect="0,0,10,10"/>
-                                    </GeometryDrawing.Geometry>
-                                </GeometryDrawing>
-                                <GeometryDrawing Brush="Black" Geometry="M0,10L0,0 10,0 10,1 1,1 1,10z"/>
-                            </DrawingGroup>
-                        </DrawingBrush.Drawing>
-                    </DrawingBrush>
-                </Rectangle.Fill>
-            </Rectangle>-->
-       </Grid>
-       
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Items}" Margin="5">
+
+            <!-- This panel will be used to hold the items -->
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="{Binding Rows}" Columns="{Binding Columns}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <!-- Each item will be drawn using this template -->
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding}" Background="#FFCD853F" Margin="1"  />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>
