@@ -8,8 +8,8 @@ namespace DesktopApp.Base_classes
 {
     public class Element
     {
+        public int CountOnDesert { get; set; }
         public ElementType ElementType { get; set; }
-        public int CountOnMap { get; set; }
         public string Color { get; set; } = "peru";
     }
 }

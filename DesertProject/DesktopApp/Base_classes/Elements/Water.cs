@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace DesktopApp.Base_classes.Elements
 {
@@ -12,7 +14,7 @@ namespace DesktopApp.Base_classes.Elements
         {
             ElementType = ElementType.Water;
             Color = "blue";
-            CountOnMap = 4;
+            CountOnDesert = 4;
         }
     }
 }

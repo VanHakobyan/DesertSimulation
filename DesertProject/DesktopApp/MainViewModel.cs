@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DesktopApp.Base_classes;
 using System.Collections.ObjectModel;
+using DesktopApp.Base_classes.Elements;
 
 namespace DesktopApp
 {
@@ -42,9 +43,28 @@ namespace DesktopApp
             {
                 Items.Add(new Element());
             }
+            FillElements();
 
             Notify(nameof(Items));
 
+        }
+
+        private void FillElements()
+        {
+            var waters = new Water().CountOnDesert;
+            Rows = 10;
+            Columns = 10;
+
+            int index;
+            for (int i = 0; i < waters; i++)
+            {
+                index = _rnd.Next(0, 100);
+                while (Items[index].Color != "peru")
+                {
+                    index = _rnd.Next(0, 100);
+                }
+                Items[index] = new Water();
+            }
         }
 
         public int Rows
