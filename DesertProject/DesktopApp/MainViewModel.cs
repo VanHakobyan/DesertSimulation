@@ -33,7 +33,7 @@ namespace DesktopApp
             View.Show();
         }
 
-        public MainViewModel(int rows ,int columns)
+        public MainViewModel(int rows, int columns)
         {
             Rows = rows;
             Columns = columns;
@@ -46,25 +46,57 @@ namespace DesktopApp
             FillElements();
 
             Notify(nameof(Items));
-
         }
 
         private void FillElements()
         {
             var waters = new Water().CountOnDesert;
-            Rows = 10;
-            Columns = 10;
+            var grasses = new Grass().CountOnDesert;
+            var rocks = new Rock().CountOnDesert;
+            var quicksands = new Quicksand().CountOnDesert;
 
             int index;
             for (int i = 0; i < waters; i++)
             {
-                index = _rnd.Next(0, 100);
+                index = _rnd.Next(0, Rows * Columns);
                 while (Items[index].Color != "peru")
                 {
-                    index = _rnd.Next(0, 100);
+                    index = _rnd.Next(0, Rows * Columns);
                 }
                 Items[index] = new Water();
             }
+            for (int i = 0; i < grasses; i++)
+            {
+                index = _rnd.Next(0, Rows * Columns);
+                while (Items[index].Color != "peru")
+                {
+                    index = _rnd.Next(0, Rows * Columns);
+                }
+                Items[index] = new Grass();
+            }
+            for (int i = 0; i < rocks; i++)
+            {
+                index = _rnd.Next(0, Rows * Columns);
+                while (Items[index].Color != "peru")
+                {
+                    index = _rnd.Next(0, Rows * Columns);
+                }
+                Items[index] = new Rock();
+            }
+            for (int i = 0; i < quicksands; i++)
+            {
+                index = _rnd.Next(0, Rows * Columns);
+                while (Items[index].Color != "peru")
+                {
+                    index = _rnd.Next(0, Rows * Columns);
+                }
+                Items[index] = new Quicksand();
+            }
+        }
+
+        private void SetPlayers()
+        {
+
         }
 
         public int Rows
