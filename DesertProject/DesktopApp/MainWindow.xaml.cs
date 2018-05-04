@@ -27,6 +27,10 @@ namespace DesktopApp
             InitializeComponent();
         }
 
+        public static Application GetApp()
+        {
+            return Application.Current;
+        }
         private void MenuExit_OnClick(object sender, RoutedEventArgs e) => Close();
 
         private void MenuRestart_OnClick(object sender, RoutedEventArgs e)
