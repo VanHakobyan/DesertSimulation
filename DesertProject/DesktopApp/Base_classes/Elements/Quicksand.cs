@@ -12,7 +12,7 @@ namespace DesktopApp.Base_classes.Elements
         {
             ElementType = ElementType.Quicksand;
             Color = "yellow";
-            CountOnDesert = 14;
+            CountOnDesert = 1;
         }
     }
 }

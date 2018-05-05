@@ -17,7 +17,7 @@ namespace DesktopApp.Players
         public Coyote()
         {
             ElementType = ElementType.Coyote;
-            CountOnDesert = 3;
+            CountOnDesert = 1;
             Name = "Coyote";
         }
     }

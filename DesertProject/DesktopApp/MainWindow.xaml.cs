@@ -23,12 +23,9 @@ namespace DesktopApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private System.Timers.Timer timer;
         public MainWindow()
         {
             InitializeComponent();
-            timer = new System.Timers.Timer(10000);
-            timer.Elapsed += Timer_Elapsed;
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -52,16 +49,20 @@ namespace DesktopApp
 
         private void Pause_OnClick(object sender, RoutedEventArgs e)
         {
-            timer.Stop();
+            MainViewModel.timer.Enabled = false;
         }
-
         private void Play_OnClick(object sender, RoutedEventArgs e)
         {
-          timer.Start();
+            MainViewModel.timer.Start();
+        }
+        private void Resume_OnClick(object sender, RoutedEventArgs e)
+        {
+            MainViewModel.timer.Enabled = true;
         }
 
-        private void About_OnClick(object sender, RoutedEventArgs e)=>new About().Show();
+        private void About_OnClick(object sender, RoutedEventArgs e) => new About().Show();
 
         private void MainSettings_OnClick(object sender, RoutedEventArgs e) => new MainSetings().Show();
+
     }
 }

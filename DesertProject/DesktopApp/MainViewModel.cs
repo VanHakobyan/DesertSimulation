@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using DesktopApp.Base_classes.Elements;
 using DesktopApp.Players;
+using System.Timers;
 
 namespace DesktopApp
 {
@@ -15,6 +16,7 @@ namespace DesktopApp
 
         private Random _rnd = new Random();
         private List<int> _coyoteIndexes = new List<int>();
+        public static System.Timers.Timer timer;
 
         public ObservableCollection<Element> Items
         {
@@ -39,6 +41,9 @@ namespace DesktopApp
 
         public MainViewModel(int rows, int columns)
         {
+            timer = new System.Timers.Timer(2000);
+            timer.Elapsed += Iterate;
+
             Rows = rows;
             Columns = columns;
 
@@ -50,8 +55,6 @@ namespace DesktopApp
 
             FillElements();
             SetPlayers();
-
-            Iterate();
 
             Notify(nameof(Items));
         }
@@ -129,17 +132,24 @@ namespace DesktopApp
             }
         }
 
-        private void Iterate()
+        private void Iterate(object sender, ElapsedEventArgs e)
         {
-            foreach (var coyoteIndex in _coyoteIndexes)
+            timer.Enabled = false;
+            for (var i = 0; i < _coyoteIndexes.Count; i++)
             {
-                var adjacentSpots = GetAdjacentSpots(coyoteIndex);
-                if(adjacentSpots.Count == 0) continue;
+                var adjacentSpots = GetAdjacentSpots(_coyoteIndexes[i]);
+                if (adjacentSpots.Count == 0) continue;
                 var randomStep = _rnd.Next(0, adjacentSpots.Count);
-                var currentCoyote = Items[coyoteIndex];
-                Items[randomStep] = currentCoyote;
-                Items[coyoteIndex] = new Element();
+                var currentCoyote = Items[_coyoteIndexes[i]];
+                Application.Current.Dispatcher.Invoke((Action) delegate
+                {
+                    Items[adjacentSpots[randomStep]] = currentCoyote;
+                    Items[_coyoteIndexes[i]] = new Element();
+                });
+                _coyoteIndexes[i] = adjacentSpots[randomStep];
             }
+            Notify(nameof(Items));
+            timer.Enabled = true;
         }
 
         private List<int> GetAdjacentSpots(int index)
