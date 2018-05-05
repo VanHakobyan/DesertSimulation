@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using DesktopApp.Base_classes;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Xml;
 using DesktopApp.Base_classes.Elements;
 using DesktopApp.Players;
 
@@ -34,10 +36,24 @@ namespace DesktopApp
             View.Show();
         }
 
-        public MainViewModel(int rows, int columns)
+        public MainViewModel()
         {
-            Rows = rows;
-            Columns = columns;
+            if (!File.Exists("MainSettings.xml"))
+            {
+                Rows = 10;
+                Columns = 10;
+            }
+            else
+            {
+                XmlDataDocument xmldoc = new XmlDataDocument();
+                FileStream fs = new FileStream("MainSettings.xml", FileMode.Open, FileAccess.Read);
+                xmldoc.Load(fs);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[0].InnerText, out var rows);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[1].InnerText, out var columns);
+
+                Rows = rows;
+                Columns = columns;
+            }
 
             Items = new ObservableCollection<Element>();
             for (var i = 0; i < Rows * Columns; i++)

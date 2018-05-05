@@ -19,7 +19,7 @@ namespace DesktopApp
         {
             base.OnStartup(e);
 
-            viewModel = new MainViewModel(10,15);
+            viewModel = new MainViewModel();
             viewModel.Show();
         }
     }
