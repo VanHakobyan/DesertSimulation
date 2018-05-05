@@ -43,6 +43,8 @@ namespace DesktopApp
 
         public MainViewModel()
         {
+            timer = new System.Timers.Timer(2000);
+            timer.Elapsed += Iterate;
             if (!File.Exists("MainSettings.xml"))
             {
                 Rows = 10;
