@@ -8,6 +8,7 @@ namespace DesktopApp.Players
         public int Dehydration { get; set; } = PlayerSettings.DehydrationCoyote;
         public int Gestation { get; set; } = PlayerSettings.GestationCoyote;
         public int Lifetime { get; set; } = PlayerSettings.LifetimeCoyote;
+        public int Age { get; set; } = 0;
 
         public Coyote()
         {

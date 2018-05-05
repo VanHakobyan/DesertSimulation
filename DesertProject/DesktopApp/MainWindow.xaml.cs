@@ -46,7 +46,11 @@ namespace DesktopApp
             Application.Current.Shutdown();
         }
 
-        private void PlayerSettings_OnClick(object sender, RoutedEventArgs e) => new Settings().Show();
+        private void PlayerSettings_OnClick(object sender, RoutedEventArgs e)
+        {
+            Pause_OnClick(null,null);
+            new Settings().Show();
+        }
 
         #region Game settings handlers
         private void Pause_OnClick(object sender, RoutedEventArgs e)
@@ -60,12 +64,19 @@ namespace DesktopApp
         private void Resume_OnClick(object sender, RoutedEventArgs e)
         {
             MainViewModel.timer.Enabled = true;
-        } 
+        }
         #endregion
 
-        private void About_OnClick(object sender, RoutedEventArgs e) => new About().Show();
+        private void About_OnClick(object sender, RoutedEventArgs e)
+        {
+            Pause_OnClick(null,null);
+            new About().Show();
+        }
 
-        private void MainSettings_OnClick(object sender, RoutedEventArgs e) => new MainSetings().Show();
-
+        private void MainSettings_OnClick(object sender, RoutedEventArgs e)
+        {
+            Pause_OnClick(null, null);
+            new MainSettings().Show();
+        }
     }
 }

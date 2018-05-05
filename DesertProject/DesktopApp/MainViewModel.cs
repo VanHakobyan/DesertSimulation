@@ -48,7 +48,7 @@ namespace DesktopApp
             timer = new System.Timers.Timer(2000);
             timer.Elapsed += Iterate;
             if (File.Exists("MainSettings.xml"))
-            { 
+            {
                 XmlDataDocument xmldoc = new XmlDataDocument();
                 FileStream fs = new FileStream("MainSettings.xml", FileMode.Open, FileAccess.Read);
                 xmldoc.Load(fs);
@@ -65,16 +65,16 @@ namespace DesktopApp
                 }
                 else
                 {
-                    MainSettings.Height = height;
-                    MainSettings.Width = width;
-                    MainSettings.ObstaclesCount = obstaclesCount;
-                    MainSettings.PatchesOfGrassCount = patchesOfGrassCount;
-                    MainSettings.QuicksandSinkholesCount = quicksandSinkholesCount;
-                    MainSettings.WaterSourcesCount = waterSourcesCount;
+                    MainSettingsModel.Height = height;
+                    MainSettingsModel.Width = width;
+                    MainSettingsModel.ObstaclesCount = obstaclesCount;
+                    MainSettingsModel.PatchesOfGrassCount = patchesOfGrassCount;
+                    MainSettingsModel.QuicksandSinkholesCount = quicksandSinkholesCount;
+                    MainSettingsModel.WaterSourcesCount = waterSourcesCount;
                 }
             }
-            Rows = MainSettings.Height;
-            Columns = MainSettings.Width;
+            Rows = MainSettingsModel.Height;
+            Columns = MainSettingsModel.Width;
             if (File.Exists("PlayerSettings.xml"))
             {
                 XmlDataDocument xmldoc = new XmlDataDocument();
@@ -125,10 +125,10 @@ namespace DesktopApp
 
         private void FillElements()
         {
-            var waters = MainSettings.WaterSourcesCount;
-            var grasses = MainSettings.PatchesOfGrassCount;
-            var rocks = MainSettings.ObstaclesCount;
-            var quicksands =MainSettings.QuicksandSinkholesCount;
+            var waters = MainSettingsModel.WaterSourcesCount;
+            var grasses = MainSettingsModel.PatchesOfGrassCount;
+            var rocks = MainSettingsModel.ObstaclesCount;
+            var quicksands = MainSettingsModel.QuicksandSinkholesCount;
 
             int index;
             for (int i = 0; i < waters; i++)
@@ -200,14 +200,34 @@ namespace DesktopApp
         private void Iterate(object sender, ElapsedEventArgs e)
         {
             timer.Enabled = false;
-            IterateCoyotes();
-            IterateMice();
-            timer.Enabled = true;
+            try
+            {
+                IterateCoyotes();
+                IterateMice();
+            }
+            finally
+            {
+                timer.Enabled = true;
+            }
         }
 
-        private void GiveBirthToAChild(int indexOfParent)
+        private void GiveBirthToAChild(int indexOfParent, ElementType et)
         {
-
+            var adjacentSpots = GetAdjacentSpots(indexOfParent);
+            var sands = adjacentSpots.Where(x => Items[x].ElementType == ElementType.Sand).ToList();
+            if (sands.Count == 0) return;
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                switch (et)
+                {
+                    case ElementType.Coyote:
+                        Items[adjacentSpots[_rnd.Next(0, sands.Count)]] = new Coyote();
+                        break;
+                    case ElementType.PocketMouse:
+                        Items[adjacentSpots[_rnd.Next(0, sands.Count)]] = new PocketMouse();
+                        break;
+                }
+            });
         }
 
         private void IterateCoyotes()
@@ -251,6 +271,9 @@ namespace DesktopApp
                            ((Coyote)currentCoyote).Starvation += 10;
                            break;
                    }
+
+                   ((Coyote)currentCoyote).Age++;
+
                    if (((Coyote)currentCoyote).Dehydration >= 1000 || ((Coyote)currentCoyote).Starvation >= 1000)
                    {
                        Application.Current.Dispatcher.Invoke((Action)delegate
@@ -259,6 +282,11 @@ namespace DesktopApp
                            _coyoteIndexes.RemoveAt(i);
                            i--;
                        });
+                   }
+                   else if (((Coyote) currentCoyote).Age != 0 && ((Coyote) currentCoyote).Age % 3 == 0)
+                   {
+                       GiveBirthToAChild(_coyoteIndexes[i], ElementType.Coyote);
+                       Notify(nameof(Items));
                    }
                });
             }
@@ -272,7 +300,7 @@ namespace DesktopApp
                 var adjacentSpots = GetAdjacentSpots(_miceIndexes[i]);
                 if (adjacentSpots.Count == 0) continue;
                 var randomStep = _rnd.Next(0, adjacentSpots.Count);
-                var currentMice = Items[_miceIndexes[i]];
+                var currentMouse = Items[_miceIndexes[i]];
                 Application.Current.Dispatcher.Invoke((Action)delegate
                 {
                     switch (Items[adjacentSpots[randomStep]].ElementType)
@@ -280,8 +308,8 @@ namespace DesktopApp
                         case ElementType.Coyote:
                         case ElementType.Rock:
                         case ElementType.PocketMouse:
-                            ((PocketMouse)currentMice).Dehydration += 10;
-                            ((PocketMouse)currentMice).Starvation += 10;
+                            ((PocketMouse)currentMouse).Dehydration += 10;
+                            ((PocketMouse)currentMouse).Starvation += 10;
                             return;
                         case ElementType.Quicksand:
                             Items[_miceIndexes[i]] = new Element();
@@ -289,25 +317,28 @@ namespace DesktopApp
                             i--;
                             return;
                         case ElementType.Water:
-                            ((PocketMouse)currentMice).Dehydration -= 10;
-                            ((PocketMouse)currentMice).Starvation += 10;
+                            ((PocketMouse)currentMouse).Dehydration -= 10;
+                            ((PocketMouse)currentMouse).Starvation += 10;
                             break;
                         case ElementType.Grass:
-                            Items[adjacentSpots[randomStep]] = currentMice;
+                            Items[adjacentSpots[randomStep]] = currentMouse;
                             Items[_miceIndexes[i]] = new Element();
                             _miceIndexes[i] = adjacentSpots[randomStep];
-                            ((PocketMouse)currentMice).Starvation -= 10;
-                            ((PocketMouse)currentMice).Dehydration += 10;
+                            ((PocketMouse)currentMouse).Starvation -= 10;
+                            ((PocketMouse)currentMouse).Dehydration += 10;
                             break;
                         default:
-                            Items[adjacentSpots[randomStep]] = currentMice;
+                            Items[adjacentSpots[randomStep]] = currentMouse;
                             Items[_miceIndexes[i]] = new Element();
                             _miceIndexes[i] = adjacentSpots[randomStep];
-                            ((PocketMouse)currentMice).Dehydration += 10;
-                            ((PocketMouse)currentMice).Starvation += 10;
+                            ((PocketMouse)currentMouse).Dehydration += 10;
+                            ((PocketMouse)currentMouse).Starvation += 10;
                             break;
                     }
-                    if (((PocketMouse)currentMice).Dehydration >= 1000 || ((PocketMouse)currentMice).Starvation >= 1000)
+
+                    ((PocketMouse) currentMouse).Age++;
+
+                    if (((PocketMouse)currentMouse).Dehydration >= 1000 || ((PocketMouse)currentMouse).Starvation >= 1000)
                     {
                         Application.Current.Dispatcher.Invoke((Action)delegate
                         {
@@ -315,6 +346,11 @@ namespace DesktopApp
                             _miceIndexes.RemoveAt(i);
                             i--;
                         });
+                    }
+                    else if (((PocketMouse) currentMouse).Age != 0 && ((PocketMouse) currentMouse).Age % 3 == 0)
+                    {
+                        GiveBirthToAChild(_miceIndexes[i], ElementType.PocketMouse);
+                        Notify(nameof(Items));
                     }
                 });
             }

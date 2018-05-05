@@ -20,9 +20,9 @@ namespace DesktopApp
     /// <summary>
     /// Interaction logic for MainSetings.xaml
     /// </summary>
-    public partial class MainSetings : Window
+    public partial class MainSettings : Window
     {
-        public MainSetings()
+        public MainSettings()
         {
             InitializeComponent();
             Init();
@@ -30,7 +30,7 @@ namespace DesktopApp
 
         private void Init()
         {
-            if (!File.Exists("MainSettings.xml"))
+            if (!File.Exists("MainSettingsModel.xml"))
             {
                 Height.Text = "15";
                 Width.Text = "20";
@@ -42,7 +42,7 @@ namespace DesktopApp
             else
             {
                 XmlDataDocument xmldoc = new XmlDataDocument();
-                FileStream fs = new FileStream("MainSettings.xml", FileMode.Open, FileAccess.Read);
+                FileStream fs = new FileStream("MainSettingsModel.xml", FileMode.Open, FileAccess.Read);
                 xmldoc.Load(fs);
                 Height.Text = xmldoc.ChildNodes[1].ChildNodes[0].InnerText;
                 Width.Text = xmldoc.ChildNodes[1].ChildNodes[1].InnerText;
@@ -84,7 +84,7 @@ namespace DesktopApp
             }
             catch {/*ignored*/}
             XmlDataDocument xmldoc = new XmlDataDocument();
-            FileStream fs = new FileStream("MainSettings.xml", FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream("MainSettingsModel.xml", FileMode.Open, FileAccess.Read);
             xmldoc.Load(fs);
             //new MainViewModel().Show();
             MainWindow.Restart();

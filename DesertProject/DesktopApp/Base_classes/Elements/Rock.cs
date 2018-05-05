@@ -6,7 +6,7 @@
         {
             ElementType = ElementType.Rock;
             Color = "black";
-            CountOnDesert = MainSettings.ObstaclesCount;
+            CountOnDesert = MainSettingsModel.ObstaclesCount;
         }
     }
 }

@@ -6,7 +6,7 @@
         {
             ElementType = ElementType.Quicksand;
             Color = "yellow";
-            CountOnDesert = MainSettings.QuicksandSinkholesCount;
+            CountOnDesert = MainSettingsModel.QuicksandSinkholesCount;
         }
     }
 }

@@ -6,7 +6,7 @@
         {
             ElementType = ElementType.Grass;
             Color = "green";
-            CountOnDesert = MainSettings.PatchesOfGrassCount;
+            CountOnDesert = MainSettingsModel.PatchesOfGrassCount;
         }
     }
 }
