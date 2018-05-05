@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,9 +23,17 @@ namespace DesktopApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private System.Timers.Timer timer;
         public MainWindow()
         {
             InitializeComponent();
+            timer = new System.Timers.Timer(10000);
+            timer.Elapsed += Timer_Elapsed;
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            //
         }
 
         public static Application GetApp()
@@ -43,19 +52,16 @@ namespace DesktopApp
 
         private void Pause_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            timer.Stop();
         }
 
         private void Play_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+          timer.Start();
         }
 
-        private void About_OnClick(object sender, RoutedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
+        private void About_OnClick(object sender, RoutedEventArgs e)=>new About().Show();
 
-        private void MainSettings_OnClick(object sender, RoutedEventArgs e)=>new MainSetings().Show();
+        private void MainSettings_OnClick(object sender, RoutedEventArgs e) => new MainSetings().Show();
     }
 }
