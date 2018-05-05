@@ -40,7 +40,7 @@
             <!-- Each item will be drawn using this template -->
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding Name}" Background="{Binding Color}" Margin="1"  />
+                    <Button Content="{Binding Name}" Background="{Binding Color}" Margin="1" FontWeight="Bold" FontFamily="Showcard Gothic" FontSize="14"   />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

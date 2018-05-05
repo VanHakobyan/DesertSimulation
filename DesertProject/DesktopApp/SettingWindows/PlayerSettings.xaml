@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Title="Settings" Height="280" Width="600" ResizeMode="CanMinimize">
+        Title="Player Settings" Height="300" Width="600" ResizeMode="CanMinimize">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"></RowDefinition>
@@ -26,18 +26,21 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0"></TextBlock>
                     <TextBlock Grid.Row="1" Text="Lifetime"  TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                     <TextBlock Grid.Row="2" Text="Starvation" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                     <TextBlock Grid.Row="3" Text="Dehydration" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                     <TextBlock Grid.Row="4" Text="Gestation" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <TextBlock Grid.Row="5" Text="CountOnDesert" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Grid.Row="5" Text="Count On Desert" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Grid.Row="6" Text="Gestation Period" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Grid>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
@@ -51,11 +54,13 @@
                     <TextBox Name="DehydrationPocket" Width="100" Grid.Row="3" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
                     <TextBox Name="GestationPocket" Width="100" Grid.Row="4" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
                     <TextBox Name="CountOnDesertPocket" Width="100" Grid.Row="5" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
+                    <TextBox Name="GestationPeriodPocket" Width="100" Grid.Row="6" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
                 </Grid>
             </Grid>
             <Grid Grid.Column="2">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
@@ -69,6 +74,7 @@
                     <TextBox Name="DehydrationCoyote" Width="100" Grid.Row="3" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
                     <TextBox Name="GestationCoyote" Width="100" Grid.Row="4" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
                     <TextBox Name="CountOnDesertCoyote" Width="100" Grid.Row="5" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
+                    <TextBox Name="GestationPeriodCoyote" Width="100" Grid.Row="6" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
                 </Grid>
             </Grid>
         </Grid>

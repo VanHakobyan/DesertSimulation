@@ -14,7 +14,7 @@ namespace DesktopApp.Players
         {
             ElementType = ElementType.PocketMouse;
             CountOnDesert = PlayerSettings.CountOnDesertPocket;
-            Name = "Pocket mouse";
+            Name = "PM";
         }
     }
 }
