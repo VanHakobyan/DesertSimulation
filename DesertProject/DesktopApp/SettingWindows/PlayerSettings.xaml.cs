@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -56,36 +57,63 @@ namespace DesktopApp
                 DehydrationPocket.Text = xmldoc.ChildNodes[1].ChildNodes[5].InnerText;
                 GestationPocket.Text = xmldoc.ChildNodes[1].ChildNodes[6].InnerText;
                 LifetimePocket.Text = xmldoc.ChildNodes[1].ChildNodes[7].InnerText;
-                CountOnDesertCoyote.Text= xmldoc.ChildNodes[1].ChildNodes[8].InnerText;
-                CountOnDesertPocket.Text= xmldoc.ChildNodes[1].ChildNodes[9].InnerText;
+                CountOnDesertCoyote.Text = xmldoc.ChildNodes[1].ChildNodes[8].InnerText;
+                CountOnDesertPocket.Text = xmldoc.ChildNodes[1].ChildNodes[9].InnerText;
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-
-
-            using (XmlWriter writer = XmlWriter.Create("PlayerSettings.xml"))
+            if (Regex.IsMatch(StarvationCoyote.Text, @"^\d+$") &&
+                Regex.IsMatch(DehydrationCoyote.Text, @"^\d+$") &&
+                Regex.IsMatch(GestationCoyote.Text, @"^\d+$") &&
+                Regex.IsMatch(LifetimeCoyote.Text, @"^\d+$") &&
+                Regex.IsMatch(StarvationPocket.Text, @"^\d+$") &&
+                Regex.IsMatch(DehydrationPocket.Text, @"^\d+$") &&
+                Regex.IsMatch(GestationPocket.Text, @"^\d+$") &&
+                Regex.IsMatch(LifetimePocket.Text, @"^\d+$") &&
+                Regex.IsMatch(CountOnDesertCoyote.Text, @"^\d+$") &&
+                Regex.IsMatch(CountOnDesertPocket.Text, @"^\d+$"))
             {
-                writer.WriteStartDocument();
-                writer.WriteStartElement("MainSetting");
+                if (StarvationCoyote.Text == "0" ||
+                    DehydrationCoyote.Text == "0" ||
+                    GestationCoyote.Text == "0" ||
+                    LifetimeCoyote.Text == "0" ||
+                    StarvationPocket.Text == "0" ||
+                    DehydrationPocket.Text == "0" ||
+                    GestationPocket.Text == "0" ||
+                    LifetimePocket.Text == "0" ||
+                    CountOnDesertCoyote.Text == "0" ||
+                    CountOnDesertPocket.Text == "0")
+                {
+                    MessageBox.Show("Fields can't  0 !!!");
+                }
+                else
+                {
 
-                writer.WriteElementString("StarvationCayote", StarvationCoyote.Text);
-                writer.WriteElementString("DehydrationCayote", DehydrationCoyote.Text);
-                writer.WriteElementString("GestationCayote", GestationCoyote.Text);
-                writer.WriteElementString("LifetimeCayote", LifetimeCoyote.Text);
-                writer.WriteElementString("StarvationPocket", StarvationPocket.Text);
-                writer.WriteElementString("DehydrationPocket", DehydrationPocket.Text);
-                writer.WriteElementString("GestationPocket", GestationPocket.Text);
-                writer.WriteElementString("LifetimePocket", LifetimePocket.Text);
-                writer.WriteElementString("CountOnDesertCoyote", CountOnDesertCoyote.Text);
-                writer.WriteElementString("CountOnDesertPocket", CountOnDesertPocket.Text);
+                    using (XmlWriter writer = XmlWriter.Create("PlayerSettings.xml"))
+                    {
+                        writer.WriteStartDocument();
+                        writer.WriteStartElement("MainSetting");
 
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
+                        writer.WriteElementString("StarvationCayote", StarvationCoyote.Text);
+                        writer.WriteElementString("DehydrationCayote", DehydrationCoyote.Text);
+                        writer.WriteElementString("GestationCayote", GestationCoyote.Text);
+                        writer.WriteElementString("LifetimeCayote", LifetimeCoyote.Text);
+                        writer.WriteElementString("StarvationPocket", StarvationPocket.Text);
+                        writer.WriteElementString("DehydrationPocket", DehydrationPocket.Text);
+                        writer.WriteElementString("GestationPocket", GestationPocket.Text);
+                        writer.WriteElementString("LifetimePocket", LifetimePocket.Text);
+                        writer.WriteElementString("CountOnDesertCoyote", CountOnDesertCoyote.Text);
+                        writer.WriteElementString("CountOnDesertPocket", CountOnDesertPocket.Text);
+
+                        writer.WriteEndElement();
+                        writer.WriteEndDocument();
+                    }
+                    MainWindow.Restart();
+                }
             }
-            MainWindow.Restart();
+            else MessageBox.Show("Please insert correct numbers!!!");
             //int.TryParse(StarvationCayote.Text,out var cayoteStarvation);
             //int.TryParse(DehydrationCayote.Text,out var cayoteDehydration);
             //int.TryParse(GestationCayote.Text,out var cayoteGestation);

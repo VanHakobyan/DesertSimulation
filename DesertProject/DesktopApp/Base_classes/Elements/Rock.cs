@@ -12,7 +12,7 @@ namespace DesktopApp.Base_classes.Elements
         {
             ElementType = ElementType.Rock;
             Color = "black";
-            CountOnDesert = 1;
+            CountOnDesert = MainSettings.ObstaclesCount;
         }
     }
 }
