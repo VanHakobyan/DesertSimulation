@@ -88,7 +88,8 @@ namespace DesktopApp
             XmlDataDocument xmldoc = new XmlDataDocument();
             FileStream fs = new FileStream("MainSettings.xml", FileMode.Open, FileAccess.Read);
             xmldoc.Load(fs);
-            new MainViewModel().Show();
+            //new MainViewModel().Show();
+            MainWindow.Restart();
             Close();
 
         }

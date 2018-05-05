@@ -9,15 +9,15 @@ namespace DesktopApp.Players
 {
     public class Coyote : Element
     {
-        public int Starvation { get; set; } = 30;
-        public int Dehydration { get; set; } = 50;
-        public int Gestation { get; set; } = 100;
-        public int Lifetime { get; set; } = 200;
+        public int Starvation { get; set; } = PlayerSettings.StarvationCoyote;
+        public int Dehydration { get; set; } = PlayerSettings.DehydrationCoyote;
+        public int Gestation { get; set; } = PlayerSettings.GestationCoyote;
+        public int Lifetime { get; set; } = PlayerSettings.LifetimeCoyote;
 
         public Coyote()
         {
             ElementType = ElementType.Coyote;
-            CountOnDesert = 1;
+            CountOnDesert = PlayerSettings.CountOnDesertCoyot;
             Name = "Coyote";
         }
     }

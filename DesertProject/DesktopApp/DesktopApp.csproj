@@ -96,6 +96,7 @@
     <Compile Include="Base_classes\Elements\Rock.cs" />
     <Compile Include="Base_classes\Elements\Water.cs" />
     <Compile Include="Base_classes\ElementType.cs" />
+    <Compile Include="Base_classes\PlayerSettings.cs" />
     <Compile Include="SettingWindows\MainSettings.xaml.cs">
       <DependentUpon>MainSettings.xaml</DependentUpon>
     </Compile>
