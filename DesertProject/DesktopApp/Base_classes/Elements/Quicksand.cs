@@ -12,7 +12,7 @@ namespace DesktopApp.Base_classes.Elements
         {
             ElementType = ElementType.Quicksand;
             Color = "yellow";
-            CountOnDesert = 1;
+            CountOnDesert = MainSettings.QuicksandSinkholesCount;
         }
     }
 }

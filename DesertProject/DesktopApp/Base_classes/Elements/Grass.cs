@@ -12,7 +12,7 @@ namespace DesktopApp.Base_classes.Elements
         {
             ElementType = ElementType.Grass;
             Color = "green";
-            CountOnDesert = 1;
+            CountOnDesert = MainSettings.PatchesOfGrassCount;
         }
     }
 }

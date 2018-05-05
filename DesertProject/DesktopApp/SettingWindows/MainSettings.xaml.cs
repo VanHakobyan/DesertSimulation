@@ -34,10 +34,8 @@ namespace DesktopApp
             {
                 Height.Text = "15";
                 Width.Text = "20";
-                CoyotesCount.Text = "3";
-                ObstaclesCount.Text = "5";
                 PatchesOfGrassCount.Text = "4";
-                PocketMiceCount.Text = "2";
+                ObstaclesCount.Text = "5";
                 QuicksandSinkholesCount.Text = "14";
                 WaterSourcesCount.Text = "4";
             }
@@ -49,11 +47,9 @@ namespace DesktopApp
                 Height.Text = xmldoc.ChildNodes[1].ChildNodes[0].InnerText;
                 Width.Text = xmldoc.ChildNodes[1].ChildNodes[1].InnerText;
                 PatchesOfGrassCount.Text = xmldoc.ChildNodes[1].ChildNodes[2].InnerText;
-                CoyotesCount.Text = xmldoc.ChildNodes[1].ChildNodes[3].InnerText;
-                ObstaclesCount.Text = xmldoc.ChildNodes[1].ChildNodes[4].InnerText;
-                PocketMiceCount.Text = xmldoc.ChildNodes[1].ChildNodes[5].InnerText;
-                QuicksandSinkholesCount.Text = xmldoc.ChildNodes[1].ChildNodes[6].InnerText;
-                WaterSourcesCount.Text = xmldoc.ChildNodes[1].ChildNodes[7].InnerText;
+                ObstaclesCount.Text = xmldoc.ChildNodes[1].ChildNodes[3].InnerText;
+                QuicksandSinkholesCount.Text = xmldoc.ChildNodes[1].ChildNodes[4].InnerText;
+                WaterSourcesCount.Text = xmldoc.ChildNodes[1].ChildNodes[5].InnerText;
             }
         }
 
@@ -76,10 +72,8 @@ namespace DesktopApp
                 writer.WriteElementString("Height", Height.Text);
                 writer.WriteElementString("Width", Width.Text);
                 writer.WriteElementString("PatchesOfGrassCount", PatchesOfGrassCount.Text);
-                writer.WriteElementString("CoyotesCount", CoyotesCount.Text);
                 writer.WriteElementString("ObstaclesCount", ObstaclesCount.Text);
-                writer.WriteElementString("PocketMiceCount", PocketMiceCount.Text);
-                writer.WriteElementString("PocketMiceCount", QuicksandSinkholesCount.Text);
+                writer.WriteElementString("QuicksandSinkholesCount", QuicksandSinkholesCount.Text);
                 writer.WriteElementString("WaterSourcesCount", WaterSourcesCount.Text);
 
                 writer.WriteEndElement();

@@ -45,22 +45,34 @@ namespace DesktopApp
         {
             timer = new System.Timers.Timer(2000);
             timer.Elapsed += Iterate;
-            if (!File.Exists("MainSettings.xml"))
-            {
-                Rows = 10;
-                Columns = 10;
-            }
-            else
-            {
+            if (File.Exists("MainSettings.xml"))
+            { 
                 XmlDataDocument xmldoc = new XmlDataDocument();
                 FileStream fs = new FileStream("MainSettings.xml", FileMode.Open, FileAccess.Read);
                 xmldoc.Load(fs);
-                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[0].InnerText, out var rows);
-                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[1].InnerText, out var columns);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[0].InnerText, out var height);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[1].InnerText, out var width);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[2].InnerText, out var patchesOfGrassCount);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[3].InnerText, out var obstaclesCount);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[4].InnerText, out var quicksandSinkholesCount);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[5].InnerText, out var waterSourcesCount);
 
-                Rows = rows;
-                Columns = columns;
+                if (height == 0 || width == 0 || patchesOfGrassCount == 0 || waterSourcesCount == 0 || quicksandSinkholesCount == 0 || obstaclesCount == 0)
+                {
+                    MessageBox.Show("Please insert correct numbers!!!");
+                }
+                else
+                {
+                    MainSettings.Height = height;
+                    MainSettings.Width = width;
+                    MainSettings.ObstaclesCount = obstaclesCount;
+                    MainSettings.PatchesOfGrassCount = patchesOfGrassCount;
+                    MainSettings.QuicksandSinkholesCount = quicksandSinkholesCount;
+                    MainSettings.WaterSourcesCount = waterSourcesCount;
+                }
             }
+            Rows = MainSettings.Height;
+            Columns = MainSettings.Width;
             if (File.Exists("PlayerSettings.xml"))
             {
                 XmlDataDocument xmldoc = new XmlDataDocument();
@@ -80,7 +92,7 @@ namespace DesktopApp
                     lifetimeCoyote == 0 || starvationCoyote == 0 || starvationPocket == 0 || dehydrationPocket == 0 ||
                     gestationPocket == 0 || lifetimePocket == 0)
                 {
-                    MessageBox.Show("Please imput correct numbers!!!");
+                    MessageBox.Show("Please insert correct numbers!!!");
                 }
                 else
                 {
@@ -111,10 +123,10 @@ namespace DesktopApp
 
         private void FillElements()
         {
-            var waters = new Water().CountOnDesert;
-            var grasses = new Grass().CountOnDesert;
-            var rocks = new Rock().CountOnDesert;
-            var quicksands = new Quicksand().CountOnDesert;
+            var waters = MainSettings.WaterSourcesCount;
+            var grasses = MainSettings.PatchesOfGrassCount;
+            var rocks = MainSettings.ObstaclesCount;
+            var quicksands =MainSettings.QuicksandSinkholesCount;
 
             int index;
             for (int i = 0; i < waters; i++)
@@ -157,8 +169,8 @@ namespace DesktopApp
 
         private void SetPlayers()
         {
-            var mice = new PocketMouse().CountOnDesert;
-            var coyotes = new Coyote().CountOnDesert;
+            var mice = PlayerSettings.CountOnDesertPocket;
+            var coyotes = PlayerSettings.CountOnDesertCoyot;
 
             int index;
             for (int i = 0; i < mice; i++)
