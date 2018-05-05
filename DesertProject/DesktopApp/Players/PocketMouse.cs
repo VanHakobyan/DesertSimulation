@@ -8,6 +8,7 @@ namespace DesktopApp.Players
         public int Dehydration { get; set; } = PlayerSettings.DehydrationPocket;
         public int Gestation { get; set; } = PlayerSettings.GestationPocket;
         public int Lifetime { get; set; } = PlayerSettings.LifetimePocket;
+        public int Age { get; set; } = 0;
 
         public PocketMouse()
         {

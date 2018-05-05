@@ -14,7 +14,7 @@ namespace DesktopApp.Base_classes.Elements
         {
             ElementType = ElementType.Water;
             Color = "blue";
-            CountOnDesert = MainSettings.WaterSourcesCount;
+            CountOnDesert = MainSettingsModel.WaterSourcesCount;
         }
     }
 }
