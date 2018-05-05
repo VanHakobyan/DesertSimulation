@@ -20,8 +20,9 @@
                 <MenuItem Header="_Exit"  Click="MenuExit_OnClick"/>
             </MenuItem>
             <MenuItem Header="Game">
-                <MenuItem Header="_Pause" Click="Pause_OnClick" />
                 <MenuItem Header="_Play" Click="Play_OnClick" />
+                <MenuItem Header="_Pause" Click="Pause_OnClick" />
+                <MenuItem Header="_Resume" Click="Resume_OnClick" />
             </MenuItem>
             <MenuItem Header="About">
                 <MenuItem Header="_About" Click="About_OnClick" />

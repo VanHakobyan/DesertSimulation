@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using DesktopApp.Base_classes;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 using System.IO;
 using System.Xml;
 using DesktopApp.Base_classes.Elements;
 using DesktopApp.Players;
+using System.Timers;
 
 namespace DesktopApp
 {
@@ -14,6 +17,8 @@ namespace DesktopApp
         private ObservableCollection<Element> _items;
 
         private Random _rnd = new Random();
+        private List<int> _coyoteIndexes = new List<int>();
+        public static System.Timers.Timer timer;
 
         public ObservableCollection<Element> Items
         {
@@ -60,6 +65,7 @@ namespace DesktopApp
             {
                 Items.Add(new Element());
             }
+
             FillElements();
             SetPlayers();
 
@@ -134,8 +140,46 @@ namespace DesktopApp
                 {
                     index = _rnd.Next(0, Rows * Columns);
                 }
+                _coyoteIndexes.Add(index);
                 Items[index] = new Coyote();
             }
+        }
+
+        private void Iterate(object sender, ElapsedEventArgs e)
+        {
+            timer.Enabled = false;
+            for (var i = 0; i < _coyoteIndexes.Count; i++)
+            {
+                var adjacentSpots = GetAdjacentSpots(_coyoteIndexes[i]);
+                if (adjacentSpots.Count == 0) continue;
+                var randomStep = _rnd.Next(0, adjacentSpots.Count);
+                var currentCoyote = Items[_coyoteIndexes[i]];
+                Application.Current.Dispatcher.Invoke((Action) delegate
+                {
+                    Items[adjacentSpots[randomStep]] = currentCoyote;
+                    Items[_coyoteIndexes[i]] = new Element();
+                });
+                _coyoteIndexes[i] = adjacentSpots[randomStep];
+            }
+            Notify(nameof(Items));
+            timer.Enabled = true;
+        }
+
+        private List<int> GetAdjacentSpots(int index)
+        {
+            var list = new List<int>();
+            var rowIndex = index / Columns;
+            var columnIndex = index % Columns;
+            if (rowIndex - 1 >= 0) list.Add(index - Columns);
+            if (rowIndex + 1 <= Rows - 1) list.Add(index + Columns);
+            if (columnIndex - 1 >= 0) list.Add(index - 1);
+            if (columnIndex + 1 <= Columns - 1) list.Add(index + 1);
+            if (rowIndex - 1 >= 0 && columnIndex - 1 >= 0) list.Add(index - Columns - 1);
+            if (rowIndex - 1 >= 0 && columnIndex + 1 <= Columns - 1) list.Add(index - Columns + 1);
+            if (rowIndex + 1 <= Rows - 1 && columnIndex - 1 >= 0) list.Add(index + Columns - 1);
+            if (rowIndex + 1 <= Rows - 1 && columnIndex + 1 <= Columns - 1) list.Add(index + Columns + 1);
+
+            return list;
         }
 
         public int Rows

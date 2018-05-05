@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DesktopApp.Base_classes;
+﻿using DesktopApp.Base_classes;
 
 namespace DesktopApp.Players
 {
@@ -17,7 +12,7 @@ namespace DesktopApp.Players
         public PocketMouse()
         {
             ElementType = ElementType.PocketMouse;
-            CountOnDesert = 2;
+            CountOnDesert = 1;
             Name = "Pocket mouse";
         }
     }

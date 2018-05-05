@@ -14,7 +14,7 @@ namespace DesktopApp.Base_classes.Elements
         {
             ElementType = ElementType.Water;
             Color = "blue";
-            CountOnDesert = 4;
+            CountOnDesert = 1;
         }
     }
 }
