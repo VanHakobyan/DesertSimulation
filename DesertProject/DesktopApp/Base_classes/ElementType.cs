@@ -8,6 +8,7 @@ namespace DesktopApp.Base_classes
 {
     public enum ElementType
     {
+        Sand,
         Rock,
         Quicksand,
         Water,

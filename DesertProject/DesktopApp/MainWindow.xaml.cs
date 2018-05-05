@@ -28,11 +28,6 @@ namespace DesktopApp
             InitializeComponent();
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            //
-        }
-
         public static Application GetApp()
         {
             return Application.Current;
@@ -53,6 +48,7 @@ namespace DesktopApp
 
         private void PlayerSettings_OnClick(object sender, RoutedEventArgs e) => new Settings().Show();
 
+        #region Game settings handlers
         private void Pause_OnClick(object sender, RoutedEventArgs e)
         {
             MainViewModel.timer.Enabled = false;
@@ -64,7 +60,8 @@ namespace DesktopApp
         private void Resume_OnClick(object sender, RoutedEventArgs e)
         {
             MainViewModel.timer.Enabled = true;
-        }
+        } 
+        #endregion
 
         private void About_OnClick(object sender, RoutedEventArgs e) => new About().Show();
 
