@@ -43,6 +43,8 @@ namespace DesktopApp
                 LifetimePocket.Text = "200";
                 CountOnDesertCoyote.Text = "1";
                 CountOnDesertPocket.Text = "1";
+                GestationPeriodCoyote.Text = "3";
+                GestationPeriodPocket.Text = "3";
             }
             else
             {
@@ -59,6 +61,8 @@ namespace DesktopApp
                 LifetimePocket.Text = xmldoc.ChildNodes[1].ChildNodes[7].InnerText;
                 CountOnDesertCoyote.Text = xmldoc.ChildNodes[1].ChildNodes[8].InnerText;
                 CountOnDesertPocket.Text = xmldoc.ChildNodes[1].ChildNodes[9].InnerText;
+                GestationPeriodCoyote.Text = xmldoc.ChildNodes[1].ChildNodes[10].InnerText;
+                GestationPeriodPocket.Text = xmldoc.ChildNodes[1].ChildNodes[11].InnerText;
             }
         }
 
@@ -73,6 +77,8 @@ namespace DesktopApp
                 Regex.IsMatch(GestationPocket.Text, @"^\d+$") &&
                 Regex.IsMatch(LifetimePocket.Text, @"^\d+$") &&
                 Regex.IsMatch(CountOnDesertCoyote.Text, @"^\d+$") &&
+                Regex.IsMatch(GestationPeriodCoyote.Text, @"^\d+$") &&
+                Regex.IsMatch(GestationPeriodPocket.Text, @"^\d+$") &&
                 Regex.IsMatch(CountOnDesertPocket.Text, @"^\d+$"))
             {
                 if (StarvationCoyote.Text == "0" ||
@@ -84,6 +90,8 @@ namespace DesktopApp
                     GestationPocket.Text == "0" ||
                     LifetimePocket.Text == "0" ||
                     CountOnDesertCoyote.Text == "0" ||
+                    GestationPeriodPocket.Text == "0" ||
+                    GestationPeriodPocket.Text == "0" ||
                     CountOnDesertPocket.Text == "0")
                 {
                     MessageBox.Show("Fields can't  0 !!!");
@@ -106,6 +114,8 @@ namespace DesktopApp
                         writer.WriteElementString("LifetimePocket", LifetimePocket.Text);
                         writer.WriteElementString("CountOnDesertCoyote", CountOnDesertCoyote.Text);
                         writer.WriteElementString("CountOnDesertPocket", CountOnDesertPocket.Text);
+                        writer.WriteElementString("GestationPeriodPocket", GestationPeriodPocket.Text);
+                        writer.WriteElementString("GestationPeriodCoyote", GestationPeriodCoyote.Text);
 
                         writer.WriteEndElement();
                         writer.WriteEndDocument();

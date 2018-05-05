@@ -18,7 +18,7 @@ namespace DesktopApp.Players
         {
             ElementType = ElementType.Coyote;
             CountOnDesert = PlayerSettings.CountOnDesertCoyot;
-            Name = "Coyote";
+            Name = "C";
         }
     }
 }

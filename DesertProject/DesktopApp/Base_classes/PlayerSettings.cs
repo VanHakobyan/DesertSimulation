@@ -12,5 +12,6 @@
         public static int LifetimePocket { get; set; } = 200;
         public static int CountOnDesertPocket { get; set; } = 1;
         public static int CountOnDesertCoyot { get; set; } = 1;
+        public static int GestationPeriod { get; set; } = 3;
     }
 }
