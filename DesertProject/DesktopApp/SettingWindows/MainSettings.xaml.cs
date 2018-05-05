@@ -23,6 +23,19 @@ namespace DesktopApp
         public MainSetings()
         {
             InitializeComponent();
+            Init();
+        }
+
+        private void Init()
+        {
+            CoyotesCount.Text = "3";
+            ObstaclesCount.Text = "5";
+            PatchesOfGrassCount.Text = "4";
+            PocketMiceCount.Text = "2";
+            QuicksandSinkholesCount.Text = "14";
+            WaterSourcesCount.Text = "4";
+            Height.Text = "15";
+            Width.Text = "20";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

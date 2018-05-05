@@ -23,6 +23,19 @@ namespace DesktopApp
         public Settings()
         {
             InitializeComponent();
+            Init();
+        }
+
+        private void Init()
+        {
+            StarvationCayote.Text = "30";
+            DehydrationCayote.Text = "50";
+            GestationCayote.Text = "100";
+            LifetimeCayote.Text = "200";
+            StarvationPocket.Text = "30";
+            DehydrationPocket.Text = "50";
+            GestationPocket.Text = "100";
+            LifetimePocket.Text = "200";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
