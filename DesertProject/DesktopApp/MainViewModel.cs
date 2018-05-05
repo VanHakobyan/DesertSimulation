@@ -15,12 +15,15 @@ namespace DesktopApp
 {
     public class MainViewModel : ViewModel<MainWindow>
     {
+        public static System.Timers.Timer timer;
+
         private ObservableCollection<Element> _items;
 
         private Random _rnd = new Random();
         private List<int> _coyoteIndexes = new List<int>();
         private List<int> _miceIndexes = new List<int>();
-        public static System.Timers.Timer timer;
+        private byte _babyBornCount = 1;
+
         public ObservableCollection<Element> Items
         {
             get { return _items; }
@@ -193,6 +196,11 @@ namespace DesktopApp
             timer.Enabled = true;
         }
 
+        private void GiveBirthToAChild(int indexOfParent)
+        {
+
+        }
+
         private void IterateCoyotes()
         {
             for (var i = 0; i < _coyoteIndexes.Count; i++)
@@ -234,7 +242,7 @@ namespace DesktopApp
                            ((Coyote)currentCoyote).Starvation += 10;
                            break;
                    }
-                   if (((Coyote)currentCoyote).Dehydration >= 100 || ((Coyote)currentCoyote).Starvation >= 100)
+                   if (((Coyote)currentCoyote).Dehydration >= 1000 || ((Coyote)currentCoyote).Starvation >= 1000)
                    {
                        Application.Current.Dispatcher.Invoke((Action)delegate
                        {
@@ -250,61 +258,58 @@ namespace DesktopApp
 
         private void IterateMice()
         {
-            for (int j = 0; j < 2; j++) // mice will run two time before coyotes move
+            for (var i = 0; i < _miceIndexes.Count; i++)
             {
-                for (var i = 0; i < _miceIndexes.Count; i++)
+                var adjacentSpots = GetAdjacentSpots(_miceIndexes[i]);
+                if (adjacentSpots.Count == 0) continue;
+                var randomStep = _rnd.Next(0, adjacentSpots.Count);
+                var currentMice = Items[_miceIndexes[i]];
+                Application.Current.Dispatcher.Invoke((Action)delegate
                 {
-                    var adjacentSpots = GetAdjacentSpots(_miceIndexes[i]);
-                    if (adjacentSpots.Count == 0) continue;
-                    var randomStep = _rnd.Next(0, adjacentSpots.Count);
-                    var currentMice = Items[_miceIndexes[i]];
-                    Application.Current.Dispatcher.Invoke((Action)delegate
+                    switch (Items[adjacentSpots[randomStep]].ElementType)
                     {
-                        switch (Items[adjacentSpots[randomStep]].ElementType)
+                        case ElementType.Coyote:
+                        case ElementType.Rock:
+                        case ElementType.PocketMouse:
+                            ((PocketMouse)currentMice).Dehydration += 10;
+                            ((PocketMouse)currentMice).Starvation += 10;
+                            return;
+                        case ElementType.Quicksand:
+                            Items[_miceIndexes[i]] = new Element();
+                            _miceIndexes.RemoveAt(i);
+                            i--;
+                            return;
+                        case ElementType.Water:
+                            ((PocketMouse)currentMice).Dehydration -= 10;
+                            ((PocketMouse)currentMice).Starvation += 10;
+                            break;
+                        case ElementType.Grass:
+                            Items[adjacentSpots[randomStep]] = currentMice;
+                            Items[_miceIndexes[i]] = new Element();
+                            _miceIndexes[i] = adjacentSpots[randomStep];
+                            ((PocketMouse)currentMice).Starvation -= 10;
+                            ((PocketMouse)currentMice).Dehydration += 10;
+                            break;
+                        default:
+                            Items[adjacentSpots[randomStep]] = currentMice;
+                            Items[_miceIndexes[i]] = new Element();
+                            _miceIndexes[i] = adjacentSpots[randomStep];
+                            ((PocketMouse)currentMice).Dehydration += 10;
+                            ((PocketMouse)currentMice).Starvation += 10;
+                            break;
+                    }
+                    if (((PocketMouse)currentMice).Dehydration >= 1000 || ((PocketMouse)currentMice).Starvation >= 1000)
+                    {
+                        Application.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            case ElementType.Coyote:
-                            case ElementType.Rock:
-                            case ElementType.PocketMouse:
-                                ((PocketMouse)currentMice).Dehydration += 10;
-                                ((PocketMouse)currentMice).Starvation += 10;
-                                return;
-                            case ElementType.Quicksand:
-                                Items[_miceIndexes[i]] = new Element();
-                                _miceIndexes.RemoveAt(i);
-                                i--;
-                                return;
-                            case ElementType.Water:
-                                ((PocketMouse)currentMice).Dehydration -= 10;
-                                ((PocketMouse)currentMice).Starvation += 10;
-                                break;
-                            case ElementType.Grass:
-                                Items[adjacentSpots[randomStep]] = currentMice;
-                                Items[_miceIndexes[i]] = new Element();
-                                _miceIndexes[i] = adjacentSpots[randomStep];
-                                ((PocketMouse)currentMice).Starvation -= 10;
-                                ((PocketMouse)currentMice).Dehydration += 10;
-                                break;
-                            default:
-                                Items[adjacentSpots[randomStep]] = currentMice;
-                                Items[_miceIndexes[i]] = new Element();
-                                _miceIndexes[i] = adjacentSpots[randomStep];
-                                ((PocketMouse)currentMice).Dehydration += 10;
-                                ((PocketMouse)currentMice).Starvation += 10;
-                                break;
-                        }
-                        if (((PocketMouse)currentMice).Dehydration >= 100 || ((PocketMouse)currentMice).Starvation >= 100)
-                        {
-                            Application.Current.Dispatcher.Invoke((Action)delegate
-                            {
-                                Items[_miceIndexes[i]] = new Element();
-                                _miceIndexes.RemoveAt(i);
-                                i--;
-                            });
-                        }
-                    });
-                }
-                Notify(nameof(Items));
+                            Items[_miceIndexes[i]] = new Element();
+                            _miceIndexes.RemoveAt(i);
+                            i--;
+                        });
+                    }
+                });
             }
+            Notify(nameof(Items));
         }
 
         private List<int> GetAdjacentSpots(int index)
