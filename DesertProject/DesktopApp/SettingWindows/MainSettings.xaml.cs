@@ -64,21 +64,25 @@ namespace DesktopApp
             //int.TryParse(QuicksandSinkholesCount.Text, out var quicksandSinkholesCount);
             //int.TryParse(WaterSourcesCount.Text, out var waterSourcesCount);
 
-            using (XmlWriter writer = XmlWriter.Create("MainSettings.xml"))
+            try
             {
-                writer.WriteStartDocument();
-                writer.WriteStartElement("MainSetting");
+                using (XmlWriter writer = XmlWriter.Create("MainSettings.xml"))
+                {
+                    writer.WriteStartDocument();
+                    writer.WriteStartElement("MainSetting");
 
-                writer.WriteElementString("Height", Height.Text);
-                writer.WriteElementString("Width", Width.Text);
-                writer.WriteElementString("PatchesOfGrassCount", PatchesOfGrassCount.Text);
-                writer.WriteElementString("ObstaclesCount", ObstaclesCount.Text);
-                writer.WriteElementString("QuicksandSinkholesCount", QuicksandSinkholesCount.Text);
-                writer.WriteElementString("WaterSourcesCount", WaterSourcesCount.Text);
+                    writer.WriteElementString("Height", Height.Text);
+                    writer.WriteElementString("Width", Width.Text);
+                    writer.WriteElementString("PatchesOfGrassCount", PatchesOfGrassCount.Text);
+                    writer.WriteElementString("ObstaclesCount", ObstaclesCount.Text);
+                    writer.WriteElementString("QuicksandSinkholesCount", QuicksandSinkholesCount.Text);
+                    writer.WriteElementString("WaterSourcesCount", WaterSourcesCount.Text);
 
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
+                    writer.WriteEndElement();
+                    writer.WriteEndDocument();
+                }
             }
+            catch {/*ignored*/}
             XmlDataDocument xmldoc = new XmlDataDocument();
             FileStream fs = new FileStream("MainSettings.xml", FileMode.Open, FileAccess.Read);
             xmldoc.Load(fs);
