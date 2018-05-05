@@ -12,7 +12,7 @@ namespace DesktopApp.Players
         public PocketMouse()
         {
             ElementType = ElementType.PocketMouse;
-            CountOnDesert = 1;
+            CountOnDesert = 2;
             Name = "Pocket mouse";
         }
     }
