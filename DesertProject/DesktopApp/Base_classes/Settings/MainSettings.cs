@@ -1,6 +1,6 @@
 ﻿namespace DesktopApp.Base_classes
 {
-    public class MainSettings
+    public static class MainSettings
     {
         public static int Height { get; set; } = 15;
         public static int Width { get; set; } = 20;
