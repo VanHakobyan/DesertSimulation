@@ -302,7 +302,9 @@ namespace DesktopApp
                 if (adjacentSpots.Count == 0) continue;
                 var randomStep = _rnd.Next(0, adjacentSpots.Count);
                 var currentMouse = Items[_miceIndexes[i]];
-                Application.Current.Dispatcher.Invoke((Action)delegate
+                try
+                {
+                    Application.Current.Dispatcher.Invoke((Action)delegate
                 {
                     switch (Items[adjacentSpots[randomStep]].ElementType)
                     {
@@ -354,6 +356,12 @@ namespace DesktopApp
                         Notify(nameof(Items));
                     }
                 });
+                }
+                catch
+                {
+                    //ignore
+                }
+                
             }
             Notify(nameof(Items));
         }
