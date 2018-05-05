@@ -30,7 +30,7 @@ namespace DesktopApp
 
         private void Init()
         {
-            if (!File.Exists("MainSettingsModel.xml"))
+            if (!File.Exists("MainSettings.xml"))
             {
                 Height.Text = "15";
                 Width.Text = "20";
@@ -42,7 +42,7 @@ namespace DesktopApp
             else
             {
                 XmlDataDocument xmldoc = new XmlDataDocument();
-                FileStream fs = new FileStream("MainSettingsModel.xml", FileMode.Open, FileAccess.Read);
+                FileStream fs = new FileStream("MainSettings.xml", FileMode.Open, FileAccess.Read);
                 xmldoc.Load(fs);
                 Height.Text = xmldoc.ChildNodes[1].ChildNodes[0].InnerText;
                 Width.Text = xmldoc.ChildNodes[1].ChildNodes[1].InnerText;
@@ -55,41 +55,42 @@ namespace DesktopApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //int.TryParse(Height.Text, out var x);
-            //int.TryParse(Width.Text, out var y);
-            //int.TryParse(CoyotesCount.Text, out var coyotesCount);
-            //int.TryParse(ObstaclesCount.Text, out var obstaclesCount);
-            //int.TryParse(PatchesOfGrassCount.Text, out var patchesOfGrassCount);
-            //int.TryParse(PocketMiceCount.Text, out var pocketMiceCount);
-            //int.TryParse(QuicksandSinkholesCount.Text, out var quicksandSinkholesCount);
-            //int.TryParse(WaterSourcesCount.Text, out var waterSourcesCount);
-
-            try
-            {
-                using (XmlWriter writer = XmlWriter.Create("MainSettings.xml"))
+            int.TryParse(Height.Text, out var x);
+            int.TryParse(Width.Text, out var y);
+            int.TryParse(ObstaclesCount.Text, out var obstaclesCount);
+            int.TryParse(PatchesOfGrassCount.Text, out var patchesOfGrassCount);
+            int.TryParse(QuicksandSinkholesCount.Text, out var quicksandSinkholesCount);
+            int.TryParse(WaterSourcesCount.Text, out var waterSourcesCount);
+            if (x != 0 && y != 0 && obstaclesCount != 0 && patchesOfGrassCount != 0 && quicksandSinkholesCount != 0 &&
+                waterSourcesCount != 0)
+                try
                 {
-                    writer.WriteStartDocument();
-                    writer.WriteStartElement("MainSetting");
+                    using (XmlWriter writer = XmlWriter.Create("MainSettings.xml"))
+                    {
+                        writer.WriteStartDocument();
+                        writer.WriteStartElement("MainSetting");
 
-                    writer.WriteElementString("Height", Height.Text);
-                    writer.WriteElementString("Width", Width.Text);
-                    writer.WriteElementString("PatchesOfGrassCount", PatchesOfGrassCount.Text);
-                    writer.WriteElementString("ObstaclesCount", ObstaclesCount.Text);
-                    writer.WriteElementString("QuicksandSinkholesCount", QuicksandSinkholesCount.Text);
-                    writer.WriteElementString("WaterSourcesCount", WaterSourcesCount.Text);
+                        writer.WriteElementString("Height", Height.Text);
+                        writer.WriteElementString("Width", Width.Text);
+                        writer.WriteElementString("PatchesOfGrassCount", PatchesOfGrassCount.Text);
+                        writer.WriteElementString("ObstaclesCount", ObstaclesCount.Text);
+                        writer.WriteElementString("QuicksandSinkholesCount", QuicksandSinkholesCount.Text);
+                        writer.WriteElementString("WaterSourcesCount", WaterSourcesCount.Text);
 
-                    writer.WriteEndElement();
-                    writer.WriteEndDocument();
+                        writer.WriteEndElement();
+                        writer.WriteEndDocument();
+                    }
+                    MainWindow.Restart();
+                    Close();
                 }
+                catch
+                {
+                    /*ignored*/
+                }
+            else
+            {
+                MessageBox.Show("Incorrect insert !!!");
             }
-            catch {/*ignored*/}
-            XmlDataDocument xmldoc = new XmlDataDocument();
-            FileStream fs = new FileStream("MainSettingsModel.xml", FileMode.Open, FileAccess.Read);
-            xmldoc.Load(fs);
-            //new MainViewModel().Show();
-            MainWindow.Restart();
-            Close();
-
         }
     }
 }
