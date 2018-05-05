@@ -1,2 +1,3 @@
-# DesertSimulation
+<p align="center"><img src="https://i.gyazo.com/6f21d5a83d186dbbd169c74316f864dc.png"></p>
+
 The desert is represented by a flat (2D) rectangle, as shown in Figure 1. The size (height and width) of the rectangle shall be specified by the user. The rectangle shall have a dark brown background color.
