@@ -53,7 +53,7 @@ namespace DesktopApp
 
         private void About_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void MainSettings_OnClick(object sender, RoutedEventArgs e)=>new MainSetings().Show();

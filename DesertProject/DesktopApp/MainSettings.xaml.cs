@@ -27,15 +27,22 @@ namespace DesktopApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             int.TryParse(Height.Text, out var x);
             int.TryParse(Width.Text, out var y);
+            int.TryParse(CoyotesCount.Text, out var coyotesCount);
+            int.TryParse(ObstaclesCount.Text, out var obstaclesCount);
+            int.TryParse(PatchesOfGrassCount.Text, out var patchesOfGrassCount);
+            int.TryParse(PocketMiceCount.Text, out var pocketMiceCount);
+            int.TryParse(QuicksandSinkholesCount.Text, out var quicksandSinkholesCount);
+            int.TryParse(WaterSourcesCount.Text, out var waterSourcesCount);
+            
             if (x != default(int) && y != default(int))
             {
-                ConfigurationManager.AppSettings["YourKey"] = $"{x},{y}";
+               // ConfigurationManager.AppSettings["YourKey"] = $"{x},{y}";
                 new MainViewModel(x, y).Show();
             }
             else MessageBox.Show("Please enter correct!!!");
+            
             Close();
 
         }
