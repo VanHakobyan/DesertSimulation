@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Xml;
 using DesktopApp.Base_classes.Elements;
 using DesktopApp.Players;
@@ -20,7 +21,6 @@ namespace DesktopApp
         private List<int> _coyoteIndexes = new List<int>();
         private List<int> _miceIndexes = new List<int>();
         public static System.Timers.Timer timer;
-
         public ObservableCollection<Element> Items
         {
             get { return _items; }
@@ -62,6 +62,41 @@ namespace DesktopApp
 
                 Rows = rows;
                 Columns = columns;
+            }
+            if (File.Exists("PlayerSettings.xml"))
+            {
+                XmlDataDocument xmldoc = new XmlDataDocument();
+                FileStream fs = new FileStream("PlayerSettings.xml", FileMode.Open, FileAccess.Read);
+                xmldoc.Load(fs);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[0].InnerText, out var starvationCoyote);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[1].InnerText, out var dResultehydrationCoyote);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[2].InnerText, out var gestationCoyote);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[3].InnerText, out var lifetimeCoyote);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[4].InnerText, out var starvationPocket);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[5].InnerText, out var dehydrationPocket);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[6].InnerText, out var gestationPocket);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[7].InnerText, out var lifetimePocket);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[8].InnerText, out var countOnDesertCoyot);
+                int.TryParse(xmldoc.ChildNodes[1].ChildNodes[9].InnerText, out var countOnDesertPocket);
+                if (starvationCoyote == 0 || dResultehydrationCoyote == 0 || gestationCoyote == 0 ||
+                    lifetimeCoyote == 0 || starvationCoyote == 0 || starvationPocket == 0 || dehydrationPocket == 0 ||
+                    gestationPocket == 0 || lifetimePocket == 0)
+                {
+                    MessageBox.Show("Please imput correct numbers!!!");
+                }
+                else
+                {
+                    PlayerSettings.StarvationCoyote = starvationCoyote;
+                    PlayerSettings.DehydrationCoyote = dResultehydrationCoyote;
+                    PlayerSettings.GestationCoyote = gestationCoyote;
+                    PlayerSettings.LifetimeCoyote = lifetimeCoyote;
+                    PlayerSettings.StarvationPocket = starvationPocket;
+                    PlayerSettings.DehydrationPocket = dehydrationPocket;
+                    PlayerSettings.GestationPocket = gestationPocket;
+                    PlayerSettings.LifetimePocket = lifetimePocket;
+                    PlayerSettings.CountOnDesertCoyot = countOnDesertCoyot;
+                    PlayerSettings.CountOnDesertPocket = countOnDesertPocket;
+                }
             }
 
             Items = new ObservableCollection<Element>();

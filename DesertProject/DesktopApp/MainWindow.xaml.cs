@@ -40,6 +40,12 @@ namespace DesktopApp
             Application.Current.Shutdown();
         }
 
+        public static void Restart()
+        {
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
+        }
+
         private void PlayerSettings_OnClick(object sender, RoutedEventArgs e) => new Settings().Show();
 
         #region Game settings handlers
