@@ -21,7 +21,6 @@ namespace DesktopApp
         private Random _rnd = new Random();
         private List<int> _coyoteIndexes = new List<int>();
         private List<int> _miceIndexes = new List<int>();
-        private byte _babyBornCount = 1;
 
         public ObservableCollection<Element> Items
         {
@@ -78,8 +77,8 @@ namespace DesktopApp
             Columns = MainSettingsModel.Width;
             if (File.Exists("PlayerSettings.xml"))
             {
-                XmlDataDocument xmldoc = new XmlDataDocument();
-                FileStream fs = new FileStream("PlayerSettings.xml", FileMode.Open, FileAccess.Read);
+                var xmldoc = new XmlDataDocument();
+                var fs = new FileStream("PlayerSettings.xml", FileMode.Open, FileAccess.Read);
                 xmldoc.Load(fs);
                 int.TryParse(xmldoc.ChildNodes[1].ChildNodes[0].InnerText, out var starvationCoyote);
                 int.TryParse(xmldoc.ChildNodes[1].ChildNodes[1].InnerText, out var dResultehydrationCoyote);
@@ -203,7 +202,7 @@ namespace DesktopApp
             timer.Enabled = false;
             try
             {
-                IterateCoyotes();
+                //IterateCoyotes();
                 IterateMice();
             }
             finally
@@ -219,63 +218,82 @@ namespace DesktopApp
             if (sands.Count == 0) return;
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
+                var randomIndex = adjacentSpots[_rnd.Next(0, sands.Count)];
                 switch (et)
                 {
                     case ElementType.Coyote:
-                        Items[adjacentSpots[_rnd.Next(0, sands.Count)]] = new Coyote();
+                        Items[randomIndex] = new Coyote();
+                        _coyoteIndexes.Add(randomIndex);
                         break;
                     case ElementType.PocketMouse:
-                        Items[adjacentSpots[_rnd.Next(0, sands.Count)]] = new PocketMouse();
+                        Items[randomIndex] = new PocketMouse();
+                        _miceIndexes.Add(randomIndex);
                         break;
                 }
             });
+        }
+
+        private void ShowCoyoteIndexes()
+        {
+            var str = string.Join(", ", _coyoteIndexes.Select(x => x.ToString()));
+            MessageBox.Show(str);
         }
 
         private void IterateCoyotes()
         {
             for (var i = 0; i < _coyoteIndexes.Count; i++)
             {
+                ShowCoyoteIndexes();
                 var adjacentSpots = GetAdjacentSpots(_coyoteIndexes[i]);
                 if (adjacentSpots.Count == 0) continue;
                 var randomStep = _rnd.Next(0, adjacentSpots.Count);
-                var currentCoyote = Items[_coyoteIndexes[i]];
+                var currentCoyote = (Coyote)(Items[_coyoteIndexes[i]]);
                 Application.Current.Dispatcher.Invoke((Action)delegate
                {
-                   switch (Items[adjacentSpots[randomStep]].ElementType)
+                   if (currentCoyote.Age != 0 && currentCoyote.Age % 3 == 0)
                    {
-                       case ElementType.Coyote:
-                       case ElementType.Rock:
-                           ((Coyote)currentCoyote).Dehydration += 10;
-                           ((Coyote)currentCoyote).Starvation += 10;
-                           return;
-                       case ElementType.Quicksand:
-                           Items[_coyoteIndexes[i]] = new Element();
-                           _coyoteIndexes.RemoveAt(i);
-                           i--;
-                           return;
-                       case ElementType.Water:
-                           ((Coyote)currentCoyote).Dehydration -= 10;
-                           ((Coyote)currentCoyote).Starvation += 10;
-                           break;
-                       case ElementType.PocketMouse:
-                           Items[adjacentSpots[randomStep]] = currentCoyote;
-                           Items[_coyoteIndexes[i]] = new Element();
-                           _coyoteIndexes[i] = adjacentSpots[randomStep];
-                           ((Coyote)currentCoyote).Starvation -= 10;
-                           ((Coyote)currentCoyote).Dehydration += 10;
-                           break;
-                       default:
-                           Items[adjacentSpots[randomStep]] = currentCoyote;
-                           Items[_coyoteIndexes[i]] = new Element();
-                           _coyoteIndexes[i] = adjacentSpots[randomStep];
-                           ((Coyote)currentCoyote).Dehydration += 10;
-                           ((Coyote)currentCoyote).Starvation += 10;
-                           break;
+                       GiveBirthToAChild(_coyoteIndexes[i], ElementType.Coyote);
+                       Notify(nameof(Items));
+                   }
+                   else
+                   {
+                       switch (Items[adjacentSpots[randomStep]].ElementType)
+                       {
+                           //case ElementType.Coyote:
+                           //case ElementType.Rock:
+                           //    currentCoyote.Dehydration += 10;
+                           //    currentCoyote.Starvation += 10;
+                           //    return;
+                           //case ElementType.Quicksand:
+                           //    Items[_coyoteIndexes[i]] = new Element();
+                           //    _coyoteIndexes.RemoveAt(i);
+                           //    i--;
+                           //    return;
+                           //case ElementType.Water:
+                           //    currentCoyote.Dehydration -= 10;
+                           //    currentCoyote.Starvation += 10;
+                           //    break;
+                           //case ElementType.PocketMouse:
+                           //    Items[adjacentSpots[randomStep]] = currentCoyote;
+                           //    _miceIndexes.Remove(adjacentSpots[randomStep]);
+                           //    Items[_coyoteIndexes[i]] = new Element();
+                           //    _coyoteIndexes[i] = adjacentSpots[randomStep];
+                           //    currentCoyote.Starvation -= 10;
+                           //    currentCoyote.Dehydration += 10;
+                           //    break;
+                           default:
+                               Items[adjacentSpots[randomStep]] = currentCoyote;
+                               Items[_coyoteIndexes[i]] = new Element();
+                               _coyoteIndexes[i] = adjacentSpots[randomStep];
+                               currentCoyote.Dehydration += 10;
+                               currentCoyote.Starvation += 10;
+                               break;
+                       }
                    }
 
-                   ((Coyote)currentCoyote).Age++;
+                   currentCoyote.Age++;
 
-                   if (((Coyote)currentCoyote).Dehydration >= 1000 || ((Coyote)currentCoyote).Starvation >= 1000)
+                   if (currentCoyote.Dehydration >= 1000 || currentCoyote.Starvation >= 1000)
                    {
                        Application.Current.Dispatcher.Invoke((Action)delegate
                        {
@@ -283,11 +301,6 @@ namespace DesktopApp
                            _coyoteIndexes.RemoveAt(i);
                            i--;
                        });
-                   }
-                   else if (((Coyote) currentCoyote).Age != 0 && ((Coyote) currentCoyote).Age % 3 == 0)
-                   {
-                       GiveBirthToAChild(_coyoteIndexes[i], ElementType.Coyote);
-                       Notify(nameof(Items));
                    }
                });
             }
@@ -301,18 +314,16 @@ namespace DesktopApp
                 var adjacentSpots = GetAdjacentSpots(_miceIndexes[i]);
                 if (adjacentSpots.Count == 0) continue;
                 var randomStep = _rnd.Next(0, adjacentSpots.Count);
-                var currentMouse = Items[_miceIndexes[i]];
-                try
-                {
-                    Application.Current.Dispatcher.Invoke((Action)delegate
+                var currentMouse = (PocketMouse)(Items[_miceIndexes[i]]);
+                Application.Current.Dispatcher.Invoke((Action)delegate
                 {
                     switch (Items[adjacentSpots[randomStep]].ElementType)
                     {
                         case ElementType.Coyote:
                         case ElementType.Rock:
                         case ElementType.PocketMouse:
-                            ((PocketMouse)currentMouse).Dehydration += 10;
-                            ((PocketMouse)currentMouse).Starvation += 10;
+                            currentMouse.Dehydration += 10;
+                            currentMouse.Starvation += 10;
                             return;
                         case ElementType.Quicksand:
                             Items[_miceIndexes[i]] = new Element();
@@ -320,28 +331,28 @@ namespace DesktopApp
                             i--;
                             return;
                         case ElementType.Water:
-                            ((PocketMouse)currentMouse).Dehydration -= 10;
-                            ((PocketMouse)currentMouse).Starvation += 10;
+                            currentMouse.Dehydration -= 10;
+                            currentMouse.Starvation += 10;
                             break;
                         case ElementType.Grass:
                             Items[adjacentSpots[randomStep]] = currentMouse;
                             Items[_miceIndexes[i]] = new Element();
                             _miceIndexes[i] = adjacentSpots[randomStep];
-                            ((PocketMouse)currentMouse).Starvation -= 10;
-                            ((PocketMouse)currentMouse).Dehydration += 10;
+                            currentMouse.Starvation -= 10;
+                            currentMouse.Dehydration += 10;
                             break;
                         default:
                             Items[adjacentSpots[randomStep]] = currentMouse;
                             Items[_miceIndexes[i]] = new Element();
                             _miceIndexes[i] = adjacentSpots[randomStep];
-                            ((PocketMouse)currentMouse).Dehydration += 10;
-                            ((PocketMouse)currentMouse).Starvation += 10;
+                            currentMouse.Dehydration += 10;
+                            currentMouse.Starvation += 10;
                             break;
                     }
 
-                    ((PocketMouse) currentMouse).Age++;
+                    currentMouse.Age++;
 
-                    if (((PocketMouse)currentMouse).Dehydration >= 1000 || ((PocketMouse)currentMouse).Starvation >= 1000)
+                    if (currentMouse.Dehydration >= 100 || currentMouse.Starvation >= 100)
                     {
                         Application.Current.Dispatcher.Invoke((Action)delegate
                         {
@@ -350,18 +361,12 @@ namespace DesktopApp
                             i--;
                         });
                     }
-                    else if (((PocketMouse) currentMouse).Age != 0 && ((PocketMouse) currentMouse).Age % 3 == 0)
-                    {
-                        GiveBirthToAChild(_miceIndexes[i], ElementType.PocketMouse);
-                        Notify(nameof(Items));
-                    }
-                });
-                }
-                catch
-                {
-                    //ignore
-                }
-                
+                //else if (currentMouse.Age != 0 && currentMouse.Age % 3 == 0)
+                //{
+                //    GiveBirthToAChild(_miceIndexes[i], ElementType.PocketMouse);
+                //    Notify(nameof(Items));
+                //}
+            });
             }
             Notify(nameof(Items));
         }
@@ -371,6 +376,7 @@ namespace DesktopApp
             var list = new List<int>();
             var rowIndex = index / Columns;
             var columnIndex = index % Columns;
+
             if (rowIndex - 1 >= 0) list.Add(index - Columns);
             if (rowIndex + 1 <= Rows - 1) list.Add(index + Columns);
             if (columnIndex - 1 >= 0) list.Add(index - 1);
