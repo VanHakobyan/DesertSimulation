@@ -18,7 +18,7 @@ using System.Xml;
 namespace DesktopApp
 {
     /// <summary>
-    /// Interaction logic for MainSetings.xaml
+    /// Interaction logic for MainSetings 
     /// </summary>
     public partial class MainSettings : Window
     {
@@ -83,10 +83,7 @@ namespace DesktopApp
                     MainWindow.Restart();
                     Close();
                 }
-                catch
-                {
-                    /*ignored*/
-                }
+                catch{/*ignored*/}
             else
             {
                 MessageBox.Show("Incorrect insert !!!");
